@@ -4961,6 +4961,28 @@ void Solver::solver_run_bva() {
         bva.num_vars += 1;
         int new_vars = bva.num_vars;
 
+	int newCapacity = nVars() + 2;
+
+        char* new_ls_mediation_soln = new char[newCapacity];
+        std::copy(ls_mediation_soln, ls_mediation_soln + nVars() + 1, new_ls_mediation_soln);
+        delete[] ls_mediation_soln;
+        ls_mediation_soln = new_ls_mediation_soln;
+
+        char* new_ls_best_soln = new char[newCapacity];
+        std::copy(ls_best_soln, ls_best_soln + nVars() + 1, new_ls_best_soln);
+        delete[] ls_best_soln;
+        ls_best_soln = new_ls_best_soln;
+
+        char* new_top_trail_soln = new char[newCapacity];
+        std::copy(top_trail_soln, top_trail_soln + nVars() + 1, new_top_trail_soln);
+        delete[] top_trail_soln;
+        top_trail_soln = new_top_trail_soln;
+
+        char* new_tmp_up_build_soln = new char[newCapacity];
+        std::copy(tmp_up_build_soln, tmp_up_build_soln + nVars() + 1, new_tmp_up_build_soln);
+        delete[] tmp_up_build_soln;
+        tmp_up_build_soln = new_tmp_up_build_soln;
+
         // 扩充容量
         bva.lit_to_clauses->resize(new_vars * 2);
         bva.lit_count_adjust->resize(new_vars * 2);
